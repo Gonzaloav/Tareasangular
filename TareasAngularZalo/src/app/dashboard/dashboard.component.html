@@ -1,0 +1,23 @@
+<h2>Top Heroes</h2>
+<div class="heroes-menu">
+  <a *ngFor="let hero of heroes"
+    routerLink="/detail/{{hero.id}}">
+    {{hero.name}}
+  </a>
+</div>
+
+<!-- La plantilla presenta una cuadrícula de enlaces de nombres de héroes.
+
+1. El repetidor crea tantos enlaces como haya en la matriz del componente.*ngForheroes
+2. Los enlaces están diseñados como bloques de colores por el dashboard.component.css.
+3. Los enlaces no van a ninguna parte todavía.
+
+La clase es como la HeroesComponentclase.
+
+1. Define una heroespropiedad de matriz
+2. El constructor espera que Angular lo inyecte en una propiedad HeroServiceprivada .heroService
+3. Las ngOnInit()llamadas de gancho del ciclo de vidagetHeroes()
+
+Está utilizando el enlace de interpolación angular dentro del repetidor para insertar las iteraciones
+ actuales en cada archivo .*ngFor hero.id routerLink lina 4
+-->

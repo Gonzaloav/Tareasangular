@@ -29,11 +29,6 @@ export class HeroesComponent implements OnInit {
     this.getHeroes();
   }
 
-  onSelect (hero: Hero) : void {
-    this.selectedHero = hero;
-    this.messageService.add(`HeroComponent: Selected hero id=${hero.id}`);
-  }
-
   // forma asíncrona (Observable 25 -26)
   getHeroes (): void {
     this.heroService.getHeroes()
@@ -42,3 +37,10 @@ export class HeroesComponent implements OnInit {
           this.heroes = this.heroService.getHeroes ();*/
   }
 }
+
+/** Código muerto tras pt5 
+ * onSelect (hero: Hero) : void { 
+    this.selectedHero = hero;
+    this.messageService.add(`HeroComponent: Selected hero id=${hero.id}`);
+  }
+ */

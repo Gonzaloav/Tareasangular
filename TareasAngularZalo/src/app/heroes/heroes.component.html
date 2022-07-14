@@ -1,13 +1,30 @@
 
-<h2>My Heroes</h2>
+ <ul class="heroes">
+  <li *ngFor="let hero of heroes">
+    <a routerLink="/detail/{{hero.id}}"> 
+      <span class="badge">{{hero.id}}</span>{{hero.name}}
+    </a>
+  </li>
+</ul>
+
+<!-- Eliminar pt5 <app-hero-detail [hero]="selectedHero"> </app-hero-detail>
+
+Los elementos principales en HeroesComponentson elementos cuyos eventos de 
+clic están vinculados al método <li>del componente .onSelect()
+
+Retire la <li>parte posterior a solo su . Envuelva la insignia y el nombre en
+ un elemento de anclaje. Agregue un atributo al ancla que sea igual que en la 
+ plantilla del tablero.*ngFor<a>routerLink
+
+  <h2>My Heroes</h2>
     <ul class="heroes">
       <li *ngFor="let hero of heroes">
         <button [class.selected] = "hero === selectedHero"
-                type="button" (clic)="onSelect(hero)">
+                type="button" (click)="onSelect(hero)">
           <span class="badge">{{hero.id}}</span>
           <span class="name">{{hero.name}}</span>
         </button>
       </li>
     </ul>
+-->
 
-<app-hero-detail [hero]="selectedHero"> </app-hero-detail>

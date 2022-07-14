@@ -1,4 +1,26 @@
 
 <h1>{{title}}</h1>
-<app-heroes> </app-heroes>
+
+<nav>
+  <a routerLink="/dashboard"> Dashboard</a>
+  <a routerLink="/heroes"> Heroes</a>
+</nav>
+
+<router-outlet> </router-outlet>
 <app-messages> </app-messages>
+
+<!-- La AppComponentplantilla ya no es necesaria 
+  <app-heroes>porque la aplicación solo muestra 
+  HeroesComponentcuando el usuario navega hacia ella.
+
+El le dice al enrutador dónde mostrar las vistas enrutadas.
+<router-outlet>
+
+Esta RouterOutletes una de las directivas del enrutador que
+ estuvo disponible para las importaciones AppComponentporque 
+exportaron archivos . El comando que ejecutó al comienzo de 
+este tutorial agregó esta importación debido a la bandera. 
+Si no usó el comando para crear , impórtelo y agréguelo a la 
+matriz de .AppModule AppRoutingModuleRouterModule ng generate 
+-- module=app ng generate app- routing.module.ts AppRoutingModule app.module.ts
+importsNgModule -->
