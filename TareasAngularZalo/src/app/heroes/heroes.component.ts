@@ -31,7 +31,7 @@ export class HeroesComponent implements OnInit {
 
   // forma asíncrona (Observable 25 -26)
   getHeroes (): void {
-    this.heroService.getHerores()
+    this.heroService.getHeroes()
           .subscribe (heroes => this.heroes = heroes);
     /* forma sincrono.- Original
           this.heroes = this.heroService.getHeroes ();*/
