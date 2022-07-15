@@ -13,6 +13,11 @@ export class HeroService {
 
   constructor(private messageService: MessageService) { }
 
+  getHeroes(): Observable<Hero[]> {
+    const heroes = of(HEROES);
+    this.messageService.add('HeroService: fetched heroes');
+    return heroes;
+  }
 
   getHero(id: number): Observable<Hero> {
     // Por ahora, supongamos que siempre existe un héroe con el `id` especificado.
