@@ -36,6 +36,13 @@ export class HeroDetailComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
+
+  save(): void {
+    if (this.hero) {
+      this.heroService.updateHero (this.hero)
+      .subscribe (() => this.goBack());
+    }
+  }
 }
 
 /** El padre HeroesComponentsolía establecer la HeroDetailComponent.heropropiedad y HeroDetailComponentmostraba el héroe.
@@ -69,5 +76,9 @@ Los parámetros de ruta son siempre cadenas. La función de JavaScript convierte
 El navegador se actualiza y la aplicación falla con un error del compilador. HeroServiceno tiene getHero()metodo Agrégalo ahora.
 
 Agregue un goBack() método a la clase de componente que navegue hacia atrás un paso en la pila del historial del navegador usando el Locationservicio que usó para inyectar .
+
+ACTUALIZAR HÉROE.- (lina 40 - 44)
+
+Agreguar el método save(), que persiste en los cambios de nombre de héroe mediante el método updateHero() de servicio de héroe y luego vuelve a la vista anterior.
 
 */

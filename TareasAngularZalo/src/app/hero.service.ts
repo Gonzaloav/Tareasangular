@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Hero } from "./hero";
 import { HEROES } from './mock-heroes';
-import { Observable, of } from 'rxjs';
+import { Observable, of, pipe } from 'rxjs';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -15,25 +15,38 @@ export class HeroService {
 
   private heroesUrl = 'api/heroes'; // URL de la web api.
 
+  httpOptions = {
+    headers: new HttpHeaders ({ 'Content-Type': 'application/json'})
+  };
+
   constructor( 
     private http: HttpClient, 
     private messageService: MessageService ) { }
 
   getHeroes(): Observable<Hero[]> {
     this.messageService.add('HeroService: fetched heroes');
-    return this.http.get <Hero []> (this.heroesUrl)
-    .pipe (
+    return this.http.get <Hero []> (this.heroesUrl).pipe (
+      tap (_=> this.log ('feched heroes')),
       catchError (this.handleError <Hero[]>('getHeroes', []))
     );
   }
 
-  getHero(id: number): Observable<Hero> {
+  getHero (id: number): Observable <Hero> {
+    const url = `${this.heroesUrl}/${id}`;
+    return this.http.get <Hero> 
+    (url).pipe (
+    tap(_=> this.log (`fetchd hero id=${id}`)),
+    catchError (this.handleError<Hero>(`getHero id=${id}`))
+    );
+  }
+
+  /**getHero(id: number): Observable<Hero> {
     // Por ahora, supongamos que siempre existe un héroe con el `id` especificado.
     // La gestión de errores se añadirá en el siguiente paso del tutorial.
     const hero = HEROES.find(h => h.id === id)!;
     this.messageService.add(`HeroService: fetched hero id=${id}`);
     return of(hero);
-  }
+  }*/
 
 
   private handleError<T> (operation = 'operation', result? : T) {
@@ -48,6 +61,46 @@ export class HeroService {
   private  log (message: string) {
     this.messageService.add (`HeroService: ${message}`); 
    }
+
+   // PUT.- Actualiza el héroe en el servidor. 
+   updateHero(hero: Hero): Observable<any> {
+    return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
+      tap(_ => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<any>('updateHero'))
+    );
+  }
+
+  // POST.- Agregar un nuevo héroe
+  addHero(hero: Hero): Observable<Hero> {
+    return this.http.post<Hero>(this.heroesUrl, hero, this.httpOptions).pipe(
+      tap((newHero: Hero) => this.log(`added hero w/ id=${newHero.id}`)),
+      catchError(this.handleError<Hero>('addHero'))
+    );
+  }
+
+// DELETE.- Borrar un héroe.
+deleteHero (id:number): Observable <Hero> {
+  const url = `${this.heroesUrl}/${id}`;
+  return this.http.delete<Hero> (url, this.httpOptions).pipe (
+    tap (_=> this.log (`delated hero id = ${id}`)),
+    catchError (this.handleError <Hero> ('deleteHero'))
+  );
+}
+
+// GET.- Obtener los héroes cuyo nombre contiene el término de búsqueda 
+searchHeroes (term: string): Observable<Hero[]>{
+  if (!term.trim()) {
+// si no hay término de búsqueda, devuelve una matriz de héroes vacía.
+    return of ([]); 
+  }
+  
+  return this.http.get<Hero[]>(`${this.heroesUrl}/? name=${term}`).pipe(
+    tap(x => x.length ?
+       this.log(`found heroes matching "${term}"`) :
+       this.log(`no heroes matching "${term}"`)),
+    catchError(this.handleError<Hero[]>('searchHeroes', []))
+  );
+}
 
 }
 
@@ -94,6 +147,22 @@ Después de informar el error a la consola, el controlador crea un mensaje amiga
 Debido a que cada método de servicio devuelve un tipo diferente de Observableresultado, handleError()toma un parámetro de tipo para devolver el valor seguro 
 como el tipo que espera la aplicación.
 
+ACCEDE AL OBSERVABLE.- (tap línea 26)
 
+Los HeroServicemétodos aprovechan el flujo de valores observables y envían un mensaje, utilizando el log()método, al área de mensajes en la parte inferior de la página.
+
+El operador RxJS tap()habilita esta capacidad mirando los valores observables, haciendo algo con esos valores y pasándolos. La tap()devolución de llamada no accede a los valores en sí.
+
+OBTENER HEROE POR ID.- (LINEAS 31 -38)
+
+Aquí, la URL base es la heroesURLdefinida en la sección Héroes y HTTPapi/heroes e id es el número del héroe que desea recuperar. Por ejemplo, api/heroes/11.
+
+getHero()tiene tres diferencias significativas con getHeroes():
+
+. getHero()construye una URL de solicitud con la identificación del héroe deseado
+
+. El servidor debe responder con un solo héroe en lugar de una serie de héroes.
+
+. getHero()devuelve un Observable<Hero>, que es un observable de Hero objetos en lugar de un observable de Hero matrices .
 
 */
