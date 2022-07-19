@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Hero } from './hero';
-import { HEROES } from './mock-heroes';
+// import { HEROES } from './mock-heroes';
 import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -22,7 +22,6 @@ export class HeroService {
   ) {}
 
   //GET.- Héroes del servidor
-
   getHeroes(): Observable<Hero[]> {
     this.messageService.add('HeroService: fetched heroes');
     return this.http.get<Hero[]>(this.heroesUrl).pipe(
@@ -45,8 +44,7 @@ export class HeroService {
     // La gestión de errores se añadirá en el siguiente paso del tutorial.
     const hero = HEROES.find(h => h.id === id)!;
     this.messageService.add(`HeroService: fetched hero id=${id}`);
-    return of(hero);
-  }*/
+    return of(hero);  } */
 
   // PUT.- Actualiza el héroe en el servidor.
   updateHero(hero: Hero): Observable<any> {
@@ -76,7 +74,7 @@ export class HeroService {
   // GET.- Obtener los héroes cuyo nombre contiene el término de búsqueda
   searchHeroes(term: string): Observable<Hero[]> {
     if (!term.trim()) {
-      // si no hay término de búsqueda, devuelve una matriz de héroes vacía.
+      // Si no hay término de búsqueda, devuelve una matriz de héroes vacía.
       return of([]);
     }
     return this.http.get<Hero[]>(`${this.heroesUrl}/? name=${term}`).pipe(
@@ -88,19 +86,18 @@ export class HeroService {
       catchError(this.handleError<Hero[]>('searchHeroes', []))
     );
   }
-  /**
-   * Maneja la operación Http que falló.
+
+  /** Maneja la operación Http que falló.
    * Dejar que la aplicación continúe.
-   *
    * @param operation - nombre de la operación que ha fallado
-   * @param result - valor opcional a devolver como resultado observable
-   */
+   * @param result - valor opcional a devolver como resultado observable  */
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       // Envía el error a la infraestructura de registro remoto
       console.error(error); //registrar en la consola en su lugar
 
-      // TODO: mejor trabajo de transformación del error para el consumo del usuario
+      // Mejor trabajo de transformación del error para el consumo del usuario
       this.log(`${operation} failed: ${error.message} `);
       // Deja que la aplicación siga funcionando devolviendo un resultado vacío.
       return of(result as T);

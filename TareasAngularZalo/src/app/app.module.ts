@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { FormsModule } from '@angular/forms';
@@ -38,7 +37,6 @@ import { HeroSearchComponent } from './hero-search/hero-search.component';
 export class AppModule {}
 
 /** El forRoot()método de configuración toma una InMemoryDataServiceclase que prepara la base de datos en memoria.
-* El módulo HttpClientInMemoryWebApiModule intercepta las peticiones HTTP
+El módulo HttpClientInMemoryWebApiModule intercepta las peticiones HTTP
 y devuelve respuestas simuladas del servidor.
-Quítalo cuando un servidor real esté listo para recibir peticiones.
-*/
+Quítalo cuando un servidor real esté listo para recibir peticiones. */

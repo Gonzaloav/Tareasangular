@@ -3,7 +3,6 @@ import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -24,7 +23,6 @@ getHeroes (): void {
   .subscribe(heroes => this.heroes = heroes.slice (1, 5));
 }
 }
-
 
 /**getHeroes()devuelve la lista dividida de héroes en las posiciones
  1 y 5, devolviendo solo los Héroes dos, tres, cuatro y cinco.  */
